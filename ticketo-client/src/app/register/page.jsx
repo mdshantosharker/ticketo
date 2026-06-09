@@ -34,12 +34,10 @@ export default function RegisterPage() {
   } = useForm();
   //   console.log(errors);
 
-  
   //   image upload function
   const onSubmit = async (data) => {
     const imageFile = data.image[0];
     const imageUrl = await uploadImage(imageFile);
-  
 
     const { data: signupData, error: signupError } =
       await authClient.signUp.email({
