@@ -17,11 +17,14 @@ import {
   SelectPopover,
   ListBox,
   ListBoxItem,
+  toast,
 } from "@heroui/react";
 import { FaUser, FaEnvelope, FaLock, FaImage, FaGoogle } from "react-icons/fa";
 import Logo from "@/components/Logo";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
+import { uploadImage } from "@/utils/uploadImage";
+import { redirect } from "next/navigation";
 
 export default function RegisterPage() {
   const {
@@ -29,14 +32,30 @@ export default function RegisterPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log(errors);
+  //   console.log(errors);
 
+  
+  //   image upload function
   const onSubmit = async (data) => {
+    const imageFile = data.image[0];
+    const imageUrl = await uploadImage(imageFile);
+  
+
     const { data: signupData, error: signupError } =
       await authClient.signUp.email({
-        ...data,
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        image: imageUrl,
+        role: data.role,
       });
     console.log(signupData, signupError);
+    if (signupError) {
+      toast.error("Registration not succeed...");
+    } else {
+      toast("successfully register");
+      redirect("/");
+    }
   };
   return (
     <div>
@@ -53,6 +72,7 @@ export default function RegisterPage() {
         <CardBody className="gap-4">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-full">
             <Label htmlFor="name">Full Name</Label>
+
             <Input
               {...register("name", {
                 required: "Name is Required",
@@ -61,6 +81,11 @@ export default function RegisterPage() {
               placeholder="John Doe"
               className="w-full bg-slate-900/50 border-white/10 hover:border-pink-500/50 focus-within:border-pink-500!"
             />
+            {errors.name && (
+              <p className="text-red-500 font-bold text-xs">
+                {errors.name.message}
+              </p>
+            )}
             <Label htmlFor="email">Email Address</Label>
             <Input
               {...register("email", {
@@ -71,15 +96,29 @@ export default function RegisterPage() {
               type="email"
               className="w-full bg-slate-900/50 border-white/10 hover:border-pink-500/50 focus-within:border-pink-500!"
             />
+            {errors.email && (
+              <p className="text-red-500 font-bold text-xs">
+                {errors.email.message}
+              </p>
+            )}
             <Label htmlFor="image">Profile Image URL</Label>
             <Input
               {...register("image", {
                 required: "Image is Required",
               })}
+              type="file"
+              accept="image/*"
+              //   onChange={handleImageUpload}
               id="image"
               placeholder="https://example.com/avatar.jpg"
               className="w-full bg-slate-900/50 border-white/10 hover:border-pink-500/50 focus-within:border-pink-500!"
             />
+
+            {errors.image && (
+              <p className="text-red-500 font-bold text-xs">
+                {errors.image.message}
+              </p>
+            )}
 
             <Label htmlFor="password">Password</Label>
             <Input
@@ -93,6 +132,12 @@ export default function RegisterPage() {
               type="password"
               className="w-full bg-slate-900/50 border-white/10 hover:border-pink-500/50 focus-within:border-pink-500!"
             />
+
+            {errors.password && (
+              <p className="text-red-500 font-bold text-xs">
+                {errors.password.message}
+              </p>
+            )}
 
             <div className="flex flex-col gap-2 w-full">
               <Label

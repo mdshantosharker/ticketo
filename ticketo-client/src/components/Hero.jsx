@@ -7,8 +7,8 @@ import { FaRocket } from "react-icons/fa";
 const Hero = () => {
     return (
         <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden px-6">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_var(--tw-gradient-stops))] from-indigo-600/15 via-slate-950 to-slate-950 -z-10" />
-            <div className="absolute top-1/4 left-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-pink-500/10 to-indigo-500/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 -z-10" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,var(--tw-gradient-stops))] from-indigo-600/15 via-slate-950 to-slate-950 -z-10" />
+            <div className="absolute top-1/4 left-1/2 w-125 h-125 bg-linear-to-tr from-pink-500/10 to-indigo-500/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 -z-10" />
 
             <div className="max-w-5xl text-center space-y-8">
                 <div
@@ -21,7 +21,7 @@ const Hero = () => {
                     className="text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-tight"
                 >
                     Discover Premium Events &{" "}
-                    <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
+                    <span className="bg-linear-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
                         Book Tickets
                     </span>{" "}
                     Seamlessly
@@ -41,7 +41,7 @@ const Hero = () => {
                 >
                     <Link href="/events">
                         <Button
-                            className="bg-gradient-to-r from-pink-500 to-indigo-600 text-white font-bold h-14 px-8 text-md shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 hover:scale-105 transition-all w-full sm:w-auto"
+                            className="bg-linear-to-r from-pink-500 to-indigo-600 text-white font-bold h-14 px-8 text-md shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 hover:scale-105 transition-all w-full sm:w-auto"
                             radius="full"
                         >
                             Explore Events
