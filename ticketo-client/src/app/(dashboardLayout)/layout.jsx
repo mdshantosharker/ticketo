@@ -1,0 +1,17 @@
+import Logo from "@/components/Logo";
+import React from "react";
+
+const DashBoardLayout = ({ children }) => {
+  return (
+    <div className="min-h-screen flex bg-[#080c16]">
+      <aside className="w-64 h-screen border-r border-white">
+        <div className="px-6 py-5 border-b border-white">
+          <Logo />
+        </div>
+      </aside>
+      <div>{children}</div>
+    </div>
+  );
+};
+
+export default DashBoardLayout;
