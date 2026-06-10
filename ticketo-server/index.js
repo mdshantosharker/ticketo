@@ -30,6 +30,12 @@ async function run() {
     const bookingCollection = db.collection("bookings");
     const paymentCollection = db.collection("payments");
 
+    app.get("/api/organizations/:email", async (req, res) => {
+      const { email } = req.params;
+      const result = await organizationCollection.findOne({organizerEmail:email});
+      res.send(result);
+    });
+
     app.post("/api/organizations", async (req, res) => {
       const {
         organizationName,
@@ -52,7 +58,7 @@ async function run() {
       };
 
       const result = await organizationCollection.insertOne(addData);
-      return result;
+      res.send(result);
     });
 
     await client.db("admin").command({ ping: 1 });
