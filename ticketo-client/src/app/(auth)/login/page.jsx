@@ -22,14 +22,14 @@ const LoginPage = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
+    // console.log(data);
 
     const { data: signInData, error: signInError } =
       await authClient.signIn.email({
         email: data.email,
         password: data.password,
       });
-    console.log(signInData, signInError);
+    // console.log(signInData, signInError);
     if (signInError) {
       toast.error("Login not succeed...");
     } else {

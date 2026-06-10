@@ -98,7 +98,7 @@ const DashboardSidebar = () => {
   ];
 
   const role = session?.user?.role;
-  console.log(session?.user?.image);
+  // console.log(session?.user);
 
   const menuItems =
     role === "organizer"

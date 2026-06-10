@@ -13,7 +13,7 @@ export default function Navbar() {
   const router = useRouter();
   const { data: session } = authClient.useSession();
   const mockUser = session?.user;
-  console.log(mockUser);
+  // console.log(mockUser);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);

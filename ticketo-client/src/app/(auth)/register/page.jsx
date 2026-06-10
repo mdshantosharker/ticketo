@@ -47,7 +47,7 @@ export default function RegisterPage() {
         image: imageUrl,
         role: data.role,
       });
-    console.log(signupData, signupError);
+    // console.log(signupData, signupError);
     if (signupError) {
       toast.error("Registration not succeed...");
     } else {

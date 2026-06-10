@@ -1,6 +1,9 @@
 "use client";
 import DashboardHeading from "@/components/DashboardHeading";
-import { addOrganization } from "@/lib/api/organizations/action";
+import {
+  addOrganization,
+  updateOrganization,
+} from "@/lib/api/organizations/action";
 import { myOrganization } from "@/lib/api/organizations/data";
 import { authClient } from "@/lib/auth-client";
 import { uploadImage } from "@/utils/uploadImage";
@@ -20,7 +23,7 @@ const OrganizationPage = () => {
 
     setOrgData();
   }, [session]);
-  console.log(myOrg);
+  // console.log(myOrg);
   // console.log(session?.user);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,10 +45,15 @@ const OrganizationPage = () => {
       if (resData.insertedId) {
         toast.success("Org Profile added");
       }
-    }else{
-      
+    } else {
+      const updatedRes = await updateOrganization(orgData, myOrg._id);
+      if (updatedRes?.modifiedCount > 0) {
+        toast.success("Org Profile Updated");
+        console.log(updatedRes);
+        console.log(myOrg._id);
+      }
     }
-    console.log(resData);
+    // console.log(resData);
   };
   return (
     <div>
