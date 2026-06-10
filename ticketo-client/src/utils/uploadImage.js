@@ -1,4 +1,4 @@
-import { toast } from "@heroui/react";
+// import { toast } from "@heroui/react";
 
 
 export const uploadImage = async (imageFile) => {
@@ -17,5 +17,5 @@ export const uploadImage = async (imageFile) => {
     return data.data.url;
   }
 
-  toast.error('Image upload failed');
+  // toast.error('Image upload failed');
 };

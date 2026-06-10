@@ -1,20 +1,51 @@
 "use client";
 import DashboardHeading from "@/components/DashboardHeading";
+import { addOrganization } from "@/lib/api/organizations/action";
+import { myOrganization } from "@/lib/api/organizations/data";
 import { authClient } from "@/lib/auth-client";
 import { uploadImage } from "@/utils/uploadImage";
 import { Button, Card, CardHeader, Form, Input, TextArea } from "@heroui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const OrganizationPage = () => {
   const { data: session } = authClient.useSession();
-  console.log(session?.user);
+  const [myOrg, setMyOrg] = useState(null);
+  useEffect(() => {
+    const setOrgData = async () => {
+      if (!session?.user?.email) return;
+      const org = await myOrganization(session.user.email);
+      setMyOrg(org);
+    };
+
+    setOrgData();
+  }, [session]);
+  console.log(myOrg);
+  // console.log(session?.user);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    const imageFile = formData.get("organizationLogo");
+    const imageFile = formData.get("logo");
     const imageUrl = await uploadImage(imageFile);
-    console.log(data, imageUrl);
+
+    const orgData = {
+      organizationName: data.organizationName,
+      logo: imageUrl,
+      website: data.website,
+      description: data.description,
+      organizerEmail: session?.user?.email,
+    };
+
+    if (!myOrg) {
+      const resData = await addOrganization(orgData);
+      if (resData.insertedId) {
+        toast.success("Org Profile added");
+      }
+    }else{
+      
+    }
+    console.log(resData);
   };
   return (
     <div>
@@ -39,6 +70,7 @@ const OrganizationPage = () => {
           <div className="p-6">
             <Form onSubmit={handleSubmit} className="space-y-4 w-full">
               <Input
+                defaultValue={myOrg?.organizationName}
                 id="organizationName"
                 name="organizationName"
                 label="Organization Name"
@@ -48,8 +80,10 @@ const OrganizationPage = () => {
               />
 
               <Input
+                // defaultValue={}
                 id="logo"
                 type="file"
+                accept="image/*"
                 name="logo"
                 label="Organization Logo"
                 placeholder="https://images.unsplash.com/photo-1549880181-56a44cf8a4a1"
@@ -58,6 +92,7 @@ const OrganizationPage = () => {
               />
 
               <Input
+                defaultValue={myOrg?.website}
                 id="website"
                 name="website"
                 label="Organization Website"
@@ -67,6 +102,7 @@ const OrganizationPage = () => {
               />
 
               <TextArea
+                defaultValue={myOrg?.description}
                 id="org-desc"
                 name="description"
                 label="Description"
