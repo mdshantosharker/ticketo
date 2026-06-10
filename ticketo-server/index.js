@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -32,7 +32,9 @@ async function run() {
 
     app.get("/api/organizations/:email", async (req, res) => {
       const { email } = req.params;
-      const result = await organizationCollection.findOne({organizerEmail:email});
+      const result = await organizationCollection.findOne({
+        organizerEmail: email,
+      });
       res.send(result);
     });
 
@@ -58,6 +60,29 @@ async function run() {
       };
 
       const result = await organizationCollection.insertOne(addData);
+      res.send(result);
+    });
+
+    app.patch("/api/organizations/:id", async (req, res) => {
+      const { id } = req.params;
+      const { organizationName, logo, website, description, organizerEmail } =
+        req.body;
+
+      const updateData = {
+        organizationName,
+        logo,
+        website,
+        description,
+        organizerEmail,
+      };
+
+      const result = await organizationCollection.updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: updateData,
+        },
+      );
+
       res.send(result);
     });
 
