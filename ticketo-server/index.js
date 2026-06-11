@@ -30,6 +30,33 @@ async function run() {
     const bookingCollection = db.collection("bookings");
     const paymentCollection = db.collection("payments");
 
+
+
+    // events collections
+    app.get("/api/events/:email", async (req, res) => {
+      const { email } = req.params;
+      const result = await eventsCollection
+        .find({
+          organizationEmail: email,
+        })
+        .toArray();
+      res.send(result);
+    });
+
+    app.post("/api/events", async (req, res) => {
+      const data = req.body;
+      const result = await eventsCollection.insertOne({
+        ...data,
+      });
+      res.send(result);
+    });
+
+
+
+
+
+
+    // organization Collection
     app.get("/api/organizations/:email", async (req, res) => {
       const { email } = req.params;
       const result = await organizationCollection.findOne({
