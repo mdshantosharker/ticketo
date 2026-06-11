@@ -1,5 +1,7 @@
 "use client";
 import DashboardHeading from "@/components/DashboardHeading";
+import { addEvents } from "@/lib/api/events/action";
+import { useSession } from "@/lib/auth-client";
 import { uploadImage } from "@/utils/uploadImage";
 import {
   Button,
@@ -16,11 +18,15 @@ import {
   SelectValue,
   TextArea,
 } from "@heroui/react";
+import { redirect } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa";
 
 const AddEventPage = () => {
+  const { data: session } = useSession();
+
   const {
     register,
     handleSubmit,
@@ -49,7 +55,22 @@ const AddEventPage = () => {
   const onSubmit = async (data) => {
     const imageFile = data.banner[0];
     const imageUrl = await uploadImage(imageFile);
-    console.log(data, imageUrl);
+    // console.log(data, imageUrl);
+
+    delete data?.banner;
+    const eventData = {
+      ...data,
+      banner: imageUrl,
+      organizationEmail: session?.user?.email,
+    };
+    // console.log(eventData);
+
+    const result = await addEvents(eventData);
+    // console.log(result);
+    if (result.insertedId) {
+      toast.success("Event added successfully");
+      redirect('dashboard/organizer/manage-events')
+    }
   };
   return (
     <div>

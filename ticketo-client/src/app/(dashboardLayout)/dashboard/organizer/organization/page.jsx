@@ -49,8 +49,8 @@ const OrganizationPage = () => {
       const updatedRes = await updateOrganization(orgData, myOrg._id);
       if (updatedRes?.modifiedCount > 0) {
         toast.success("Org Profile Updated");
-        console.log(updatedRes);
-        console.log(myOrg._id);
+        // console.log(updatedRes);
+        // console.log(myOrg._id);
       }
     }
     // console.log(resData);
