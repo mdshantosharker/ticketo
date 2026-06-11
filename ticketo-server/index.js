@@ -30,8 +30,6 @@ async function run() {
     const bookingCollection = db.collection("bookings");
     const paymentCollection = db.collection("payments");
 
-
-
     // events collections
     app.get("/api/events/:email", async (req, res) => {
       const { email } = req.params;
@@ -51,10 +49,28 @@ async function run() {
       res.send(result);
     });
 
+    app.patch("/api/events/:id", async (req, res) => {
+      const { id } = req.params;
 
+      const updateData = req.body;
 
+      const result = await eventsCollection.updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: updateData,
+        },
+      );
 
+      res.send(result);
+    });
 
+    app.delete("/api/events/:id", async (req, res) => {
+      const { id } = req.params;
+      const result = await eventsCollection.deleteOne({
+        _id: new ObjectId(id),
+      });
+      res.send(result)
+    });
 
     // organization Collection
     app.get("/api/organizations/:email", async (req, res) => {
