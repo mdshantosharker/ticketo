@@ -69,7 +69,7 @@ const AddEventPage = () => {
     // console.log(result);
     if (result.insertedId) {
       toast.success("Event added successfully");
-      redirect('dashboard/organizer/manage-events')
+      redirect('/manage-events')
     }
   };
   return (

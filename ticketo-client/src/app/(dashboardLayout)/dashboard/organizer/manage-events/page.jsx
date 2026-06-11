@@ -1,6 +1,8 @@
 "use client";
 
 import DashboardHeading from "@/components/DashboardHeading";
+import DeleteEventModal from "@/components/DeleteEventModal";
+import EditEventModal from "@/components/EditEventModal";
 import { myEvents } from "@/lib/api/events/data";
 import { useSession } from "@/lib/auth-client";
 import {
@@ -26,7 +28,10 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 
 const ManageEvents = () => {
   const { data: session } = useSession();
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(null);
+  const [deletedId, setDeletedId] = useState(null);
   const [events, setEvents] = useState([]);
   const [loadingEvents, setLoadingEvents] = useState(false);
 
@@ -35,7 +40,7 @@ const ManageEvents = () => {
       setLoadingEvents(true);
       const eventData = await myEvents(session?.user?.email);
       setEvents(eventData);
-      setLoadingEvents(false)
+      setLoadingEvents(false);
     };
     loadEvent();
   }, [session]);
@@ -93,7 +98,7 @@ const ManageEvents = () => {
                         className="border-b border-white/5 hover:bg-white/5 transition-colors duration-150 last:border-b-0"
                       >
                         <TableCell className="py-4 px-6 align-middle font-bold text-white">
-                          <span className="line-clamp-1 truncate max-w-[150px]">
+                          <span className="line-clamp-1 truncate max-w-37.5">
                             {ev.title}
                           </span>
                         </TableCell>
@@ -172,16 +177,16 @@ const ManageEvents = () => {
       </div>
 
       {/* EVENT EDIT MODAL */}
-      {/* <EditEventModal
+      <EditEventModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         editingEvent={editingEvent}
-      /> */}
-      {/* <DeleteEventModal
+      />
+      <DeleteEventModal
         isDeleteOpen={isDeleteOpen}
         setIsDeleteOpen={setIsDeleteOpen}
         id={deletedId}
-      /> */}
+      />
     </div>
   );
 };
