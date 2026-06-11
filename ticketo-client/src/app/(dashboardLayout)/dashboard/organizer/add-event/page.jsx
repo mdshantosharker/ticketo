@@ -69,7 +69,7 @@ const AddEventPage = () => {
     // console.log(result);
     if (result.insertedId) {
       toast.success("Event added successfully");
-      redirect('/manage-events')
+      redirect("/dashboard/organizer/manage-events");
     }
   };
   return (
@@ -291,7 +291,7 @@ const AddEventPage = () => {
 
               <Button
                 type="submit"
-                className="bg-gradient-to-r from-pink-500 to-indigo-600 text-white font-bold h-11 px-6 shadow-lg shadow-pink-500/10"
+                className="bg-linear-to-r from-pink-500 to-indigo-600 text-white font-bold h-11 px-6 shadow-lg shadow-pink-500/10"
                 radius="lg"
               >
                 Host Event Now

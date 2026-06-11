@@ -2,6 +2,7 @@ import { updateEvents } from "@/lib/api/events/action";
 import { uploadImage } from "@/utils/uploadImage";
 import { Button, Form, Input, Label, Modal, TextArea } from "@heroui/react";
 import { redirect } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa";
@@ -25,12 +26,27 @@ const LOCATIONS = [
   "Online",
 ];
 const EditEventModal = ({ isModalOpen, setIsModalOpen, editingEvent }) => {
-
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+
+  useEffect(() => {
+    if (editingEvent && isModalOpen) {
+      reset({
+        title: editingEvent.title,
+        category: editingEvent.category,
+        location: editingEvent.location,
+        date: editingEvent.date,
+        price: editingEvent.price,
+        capacity: editingEvent.capacity,
+        description: editingEvent.description,
+        banner: undefined,
+      });
+    }
+  }, [editingEvent, isModalOpen, reset]);
 
   const onSubmit = async (data) => {
     // console.log(data?.banner, "data.banner");
