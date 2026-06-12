@@ -31,7 +31,7 @@ const LoginPage = () => {
       });
     // console.log(signInData, signInError);
     if (signInError) {
-      toast.error("Login not succeed...");
+      toast("Login not succeed...");
     } else {
       toast("successfully Login");
       redirect("/");

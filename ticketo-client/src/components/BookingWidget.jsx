@@ -38,11 +38,11 @@ export default function BookingWidget({ ticketPrice = 49.99, availableSeats = 12
             <Input
               type="number"
               label="Quantity"
-              labelPlacement="outside"
+        
               placeholder="1"
               min={1}
               max={availableSeats}
-              className="bg-slate-900/50 border-white/10 hover:border-pink-500/50 focus-within:!border-pink-500"
+              className="bg-slate-900/50 border-white/10 hover:border-pink-500/50 focus-within:border-pink-500!"
             />
 
             <div className="flex justify-between items-center text-sm font-semibold text-white pt-2">
@@ -58,7 +58,7 @@ export default function BookingWidget({ ticketPrice = 49.99, availableSeats = 12
           isDisabled={isSoldOut}
           className={`w-full font-bold h-12 shadow-lg ${isSoldOut
             ? "bg-slate-800 text-slate-500 shadow-none cursor-not-allowed"
-            : "bg-gradient-to-r from-pink-500 to-indigo-600 text-white shadow-pink-500/10 hover:shadow-pink-500/20"
+            : "bg-linear-to-r from-pink-500 to-indigo-600 text-white shadow-pink-500/10 hover:shadow-pink-500/20"
             }`}
           radius="lg"
         >
