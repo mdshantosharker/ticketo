@@ -31,6 +31,18 @@ async function run() {
     const paymentCollection = db.collection("payments");
 
     // events collections
+
+    app.get("/api/events", async (req, res) => {
+      const result = await eventsCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/api/events/single-events/:id", async (req, res) => {
+      const { id } = req.params;
+      const result = await eventsCollection.findOne({ _id: new ObjectId(id) });
+      res.send(result);
+    });
+
     app.get("/api/events/:email", async (req, res) => {
       const { email } = req.params;
       const result = await eventsCollection
@@ -69,7 +81,7 @@ async function run() {
       const result = await eventsCollection.deleteOne({
         _id: new ObjectId(id),
       });
-      res.send(result)
+      res.send(result);
     });
 
     // organization Collection
