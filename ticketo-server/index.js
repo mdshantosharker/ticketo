@@ -34,7 +34,33 @@ async function run() {
     // events collections
 
     app.get("/api/events", async (req, res) => {
-      const result = await eventsCollection.find().toArray();
+      const search = req.query.search;
+      const category = req.query.category;
+      const location = req.query.location;
+
+      const query = {};
+
+      if (search) {
+        query.title = {
+          $regex: search,
+          $options: "i",
+        };
+      }
+
+      if (category) {
+        query.category = {
+          $regex: category,
+          $options: "i",
+        };
+      }
+      if (location) {
+        query.location ={
+          $regex: location,
+          $options: "i",
+        }
+      }
+
+      const result = await eventsCollection.find(query).toArray();
       res.send(result);
     });
 
