@@ -52,7 +52,8 @@ const AddEventPage = () => {
     "Online",
   ];
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
     const imageFile = data.banner[0];
     const imageUrl = await uploadImage(imageFile);
     // console.log(data, imageUrl);
@@ -66,10 +67,13 @@ const AddEventPage = () => {
     // console.log(eventData);
 
     const result = await addEvents(eventData);
+
     // console.log(result);
     if (result.insertedId) {
       toast.success("Event added successfully");
-      redirect("/dashboard/organizer/manage-events");
+      // redirect("/dashboard/organizer/manage-events");
+    } else {
+      toast.error(result.message || "Event not created...");
     }
   };
   return (
