@@ -4,9 +4,27 @@ import FilterPanel from "@/components/FilterPanel";
 import EventCard from "@/components/EventCard";
 import { fetchEvents } from "@/lib/api/events/data";
 
-const EventsPage = async () => {
-  const event = await fetchEvents();
-  console.log(event);
+const EventsPage = async ({ searchParams }) => {
+  const sParams = await searchParams;
+  console.log(sParams);
+  const search = sParams.search || "";
+  const category = sParams.category || "";
+  const location = sParams.location || "";
+
+  console.log(search, category, location);
+
+  const params = new URLSearchParams();
+  if (search) {
+    params.set("search", search);
+  }
+  if (category) {
+    params.set("category", category);
+  }
+  if (location) {
+    params.set("location", location);
+  }
+  const event = await fetchEvents(params);
+  // console.log(event);
   return (
     <div className="min-h-screen py-16 px-6 max-w-7xl mx-auto w-full space-y-12">
       {/* HEADER */}
